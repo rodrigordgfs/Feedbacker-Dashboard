@@ -1,9 +1,15 @@
 /** @type {import('tailwindcss').Config} */
+
+const pallete = require('./src/assets/pallete')
+
 module.exports = {
   content: ['./public/**/*.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   presets: [],
   darkMode: 'media', // or 'class'
   theme: {
+    extend: {
+      colors: pallete
+    },
     accentColor: ({ theme }) => ({
       ...theme('colors'),
       auto: 'auto'
@@ -301,6 +307,10 @@ module.exports = {
       DEFAULT: '1'
     },
     fontFamily: {
+      regular: ['RobotoRegular'],
+      medium: ['RobotoMedium'],
+      bold: ['RobotoBold'],
+      black: ['RobotoBlack'],
       sans: [
         'ui-sans-serif',
         'system-ui',
