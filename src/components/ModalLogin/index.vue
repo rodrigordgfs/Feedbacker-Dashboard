@@ -14,7 +14,7 @@
           :class="{
             'border-brand-danger': !!state.email.errorMessage
           }"
-          class='block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded'
+          class='block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded focus:outline-none'
           placeholder='john.doe@email.com'
           v-model='state.email.value'
         />
@@ -25,14 +25,14 @@
           {{ state.email.errorMessage }}
         </span>
       </label>
-      <label class='block'>
+      <label class='block mt-5'>
         <span class='text-lg font-medium text-gray-800'>Senha</span>
         <input
           type='password'
           :class="{
             'border-brand-danger': !!state.password.errorMessage
           }"
-          class='block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded'
+          class='block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded focus:outline-none'
           placeholder='**************'
           v-model='state.password.value'
         />
@@ -60,21 +60,31 @@
 <script>
 import { reactive } from 'vue'
 import useModal from '@/hooks/useModal'
+import { useField } from 'vee-validate'
+import { validateEmptyAndLength3, validateEmptyAndEmail } from '@/utils/validators'
 
 export default {
   setup () {
     const modal = useModal()
+    const {
+      value: emailValue,
+      errorMessage: emailErrorMessage
+    } = useField('email', validateEmptyAndEmail)
+    const {
+      value: passwordValue,
+      errorMessage: passwordErrorMessage
+    } = useField('password', validateEmptyAndLength3)
 
     const state = reactive({
       hasError: false,
       isLoading: false,
       email: {
-        value: '',
-        errorMessage: ''
+        value: emailValue,
+        errorMessage: emailErrorMessage
       },
       password: {
-        value: '',
-        errorMessage: ''
+        value: passwordValue,
+        errorMessage: passwordErrorMessage
       }
     })
 
