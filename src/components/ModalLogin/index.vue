@@ -51,7 +51,12 @@
         }"
         class='px-8 py-3 mt-10 text-2xl font-bold text-white rounded-full bg-brand-main focus:outline-none transition-all duration-150 hover:opacity-75'
       >
-        Entrar
+        <icon
+          v-if='state.isLoading'
+          class="animate-spin"
+          name="loading"
+        />
+        <span v-else>Entrar</span>
       </button>
     </form>
   </div>
@@ -66,8 +71,12 @@ import services from '../../services'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { StatusCodes } from 'http-status-codes'
+import Icon from '../Icon'
 
 export default {
+  components: {
+    Icon
+  },
   setup () {
     const modal = useModal()
     const router = useRouter()
