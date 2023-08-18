@@ -1,13 +1,7 @@
 <template>
-    <div>
-
-    </div>
+  <h1 class="text-bold">Feedbacks</h1>
 </template>
 
-<script setup>
+<script>
 
 </script>
-
-<style lang="scss" scoped>
-
-</style>

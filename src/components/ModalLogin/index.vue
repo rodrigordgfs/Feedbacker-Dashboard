@@ -62,10 +62,16 @@ import { reactive } from 'vue'
 import useModal from '@/hooks/useModal'
 import { useField } from 'vee-validate'
 import { validateEmptyAndLength3, validateEmptyAndEmail } from '@/utils/validators'
+import services from '../../services'
+import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
+import { StatusCodes } from 'http-status-codes'
 
 export default {
   setup () {
     const modal = useModal()
+    const router = useRouter()
+    const toast = useToast()
     const {
       value: emailValue,
       errorMessage: emailErrorMessage
@@ -88,7 +94,36 @@ export default {
       }
     })
 
-    const handleSubmit = () => {}
+    const handleSubmit = async () => {
+      try {
+        toast.clear()
+        state.isLoading = true
+        const { data, errors } = await services.auth.login({
+          email: state.email.value,
+          password: state.password.value
+        })
+        if (!errors) {
+          toast.success('Login realizado com sucesso')
+          window.localStorage.setItem('token', data.token)
+          state.isLoading = false
+          modal.close()
+          router.push({ name: 'Feedbacks' })
+          return
+        }
+        if (errors.status === StatusCodes.NOT_FOUND) {
+          toast.error('E-mail não encontrado')
+        } else if (errors.status === StatusCodes.UNAUTHORIZED) {
+          toast.error('E-mail ou Senha invalidos')
+        } else if (errors.status === StatusCodes.BAD_REQUEST) {
+          toast.error('Ocorreu um erro ao realizar o login.')
+        }
+        state.isLoading = false
+      } catch (error) {
+        state.hasError = !!error
+        state.isLoading = false
+        toast.error('Ocorreu um erro ao realizar o login.')
+      }
+    }
 
     return {
       state,
