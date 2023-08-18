@@ -4,10 +4,12 @@
 
 <script>
 import Loading from './components/Loading'
+import Copy from './components/Copy'
 
 export default {
   components: {
-    Loading
+    Loading,
+    Copy
   },
   props: {
     name: {
