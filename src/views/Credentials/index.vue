@@ -83,7 +83,7 @@
 <script>
 import { reactive, watch } from 'vue'
 import { useToast } from 'vue-toastification'
-import HeaderLogged from './components/HeaderLogged'
+import HeaderLogged from '@/components/HeaderLogged'
 import ContentLoader from '../../components/ContentLoader'
 import Icon from '../../components/Icon'
 import useStore from '../../hooks/useStore'
