@@ -30,9 +30,9 @@
 
 <script>
 import { useRouter } from 'vue-router'
-import useStore from '../../../hooks/useStore'
+import useStore from '@/hooks/useStore'
 import { computed } from 'vue'
-import { cleanCurrentUser } from '../../../store/user'
+import { cleanCurrentUser } from '@/store/user'
 
 export default {
   setup () {
